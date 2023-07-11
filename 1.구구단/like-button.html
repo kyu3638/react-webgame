@@ -5,47 +5,77 @@
   </head>
   <body>
     <div id="root"></div>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <!--<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>-->
     <!--<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>-->
     <script type="text/babel">
       "use strict";
 
-      /* 
-        클래스형
-        class LikeButton extends React.Component {
+      class GuGuDan extends React.Component {
         constructor(props) {
           super(props);
-          this.state = {liked:false};
+          this.state = {
+            first: Math.ceil(Math.random() * 9),
+            second: Math.ceil(Math.random() * 9),
+            value: "",
+            result: "",
+          };
         }
-        render() {
-          if(this.state.liked){
-            return "You liked this.";
+
+        onSubmit = (e) => {
+          e.preventDefault();
+          if (
+            parseInt(this.state.value) ===
+            this.state.first * this.state.second
+          ) {
+            this.setState({
+              result: "정답",
+              first: Math.ceil(Math.random() * 9),
+              second: Math.ceil(Math.random() * 9),
+              value: " ",
+            });
+          } else {
+            this.setState({
+              result: "땡",
+              value: "",
+            });
           }
+        };
 
-          // return React.createElement('button', {onClick:()=>this.setState({liked:true})},'Like');
+        onChange = (e) => {
+          this.setState({ value: e.target.value });
+        };
+
+        render() {
           return (
-            <button onClick={()=>this.setState({liked:true})}>Like</button>
-          )
+            <div>
+              <div>
+                {this.state.first} 곱하기 {this.state.second}는?
+              </div>
+              <form onSubmit={this.onSubmit}>
+                <input
+                  type="number"
+                  value={this.state.value}
+                  onChange={this.onChange}
+                />
+                <button onClick={(e) => e.target.value}>입력!</button>
+              </form>
+              <div>{this.state.result}</div>
+            </div>
+          );
         }
-      } */
-
-      function LikeButton() {
-        const [liked, setLiked] = React.useState(false);
-        if(liked){ 
-          return "You liked this.";
-        }
-        return (
-          <button onClick={()=>{ setLiked(true); }}>Like</button>
-        )
       }
- 
     </script>
     <script type="text/babel">
-      // ReactDOM.render(<LikeButton />, document.querySelector("#root")); // 17버전
-      ReactDOM.createRoot(document.querySelector("#root")).render(<LikeButton />); // 18버전
+      ReactDOM.createRoot(document.querySelector("#root")).render(<GuGuDan />); // 18버전
     </script>
   </body>
 </html>
