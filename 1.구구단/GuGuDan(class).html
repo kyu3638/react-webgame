@@ -20,15 +20,12 @@
       "use strict";
 
       class GuGuDan extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = {
-            first: Math.ceil(Math.random() * 9),
-            second: Math.ceil(Math.random() * 9),
-            value: "",
-            result: "",
-          };
-        }
+        state = {
+          first: Math.ceil(Math.random() * 9),
+          second: Math.ceil(Math.random() * 9),
+          value: "",
+          result: "",
+        };
 
         onSubmit = (e) => {
           e.preventDefault();
@@ -42,11 +39,13 @@
               second: Math.ceil(Math.random() * 9),
               value: " ",
             });
+            this.input.focus();
           } else {
             this.setState({
               result: "땡",
               value: "",
             });
+            this.input.focus();
           }
         };
 
@@ -54,22 +53,27 @@
           this.setState({ value: e.target.value });
         };
 
+        input;
+
         render() {
           return (
-            <div>
+            <React.Fragment>
               <div>
                 {this.state.first} 곱하기 {this.state.second}는?
               </div>
               <form onSubmit={this.onSubmit}>
                 <input
+                  ref={(c) => {
+                    this.input = c;
+                  }}
                   type="number"
                   value={this.state.value}
                   onChange={this.onChange}
                 />
-                <button onClick={(e) => e.target.value}>입력!</button>
+                <button>입력!</button>
               </form>
               <div>{this.state.result}</div>
-            </div>
+            </React.Fragment>
           );
         }
       }
